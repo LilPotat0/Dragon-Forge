@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dragon Forge Login</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+    opacity: 0.8;
+    z-index: -1;
+  }
+
+  .dragon {
+    position: absolute;
+    top: 5%;
+    width: 200px;
+    opacity: 0.9;
+  }
+
+  .login-box {
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.7);
+    backdrop-filter: blur(10px);
+    max-width: 350px;
+    width: 90%;
+    color: #fff;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Arial Black', sans-serif;
+    color: #ff7f00;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #ffa500;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px 20px;
+    margin-top: 12px;
+    background-color: #ff7f00;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #e76f00;
+  }
+
+  .error {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+
+  .success {
+    color: lightgreen;
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+</style>
+</head>
+<body>
+
+<!-- Your logo -->
+<img src="./src/logo.png" alt="Dragon Forge Logo" class="dragon" />
+
+<div class="login-box">
+  <h1>Dragon Forge</h1>
+  <p>Unleash the Power</p>
+
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" style="width: 310px;" required />
+    <input type="password" id="password" placeholder="Password" style="width: 310px;" required />
+    <button type="submit">Login</button>
+  </form>
+
+  <div id="message"></div>
+  <a href="signup.html"><p style="color: #ff7f00;">Don't have an account? Create One!</p></a>
+</div>
+
+<script src="/JS/login.js"></script>
+
+</body>
+</html>
