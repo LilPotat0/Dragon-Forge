@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { background:#111; color:white; font-family:Arial; padding:40px; }
+    input, button { width:100%; padding:10px; margin-top:10px; }
+    button { background:#ff7f00; border:none; color:white; cursor:pointer; }
+    .product { background:#222; padding:10px; margin-top:15px; display:flex; gap:15px; align-items:center; }
+    img { width:80px; height:80px; object-fit:cover; }
+  </style>
+</head>
+<body>
+
+<h1>Admin Panel</h1>
+
+<input id="title" placeholder="Product Name">
+<input id="price" type="number" placeholder="Price">
+<input id="stock" type="number" placeholder="Stock Amount">
+<input type="file" id="imageInput">
+<button onclick="addProduct()">Add Product</button>
+
+<div id="products"></div>
+
+<script>
+let imageData = null;
+
+document.getElementById("imageInput").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    imageData = event.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+async function loadProducts() {
+  const res = await fetch("/api/products");
+  const products = await res.json();
+
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  if(products.length === 0){
+    container.innerHTML = "<p>No products yet.</p>";
+    return;
+  }
+
+  products.forEach(product => {
+    container.innerHTML += `
+      <div class="product">
+        <img src="${product.image}" />
+        <div>
+          <strong>${product.title}</strong><br>
+          $${product.price}<br>
+          Stock: ${product.stock}
+        </div>
+        <button onclick="deleteProduct(${product.id})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function addProduct() {
+  const title = document.getElementById("title").value;
+  const price = document.getElementById("price").value;
+  const stock = document.getElementById("stock").value;
+
+  await fetch("/api/products", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, price, image: imageData, stock })
+  });
+
+  loadProducts();
+}
+
+async function deleteProduct(id) {
+  await fetch("/api/products/" + id, {
+    method: "DELETE"
+  });
+
+  loadProducts();
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
